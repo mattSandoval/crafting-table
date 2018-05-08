@@ -50,7 +50,7 @@ $result2 = $members->getRecord('members');?>
 			        	<?php foreach ($result1 as $member): ?>
 			        		<tr>
 			        			
-			        			<td><?= $member['firstName'].$member['lastName'].$member['middleName'] ?></td>
+			        			<td><?= $member['firstName']." ".$member['lastName']." ".$member['middleName'] ?></td>
 				        		<td><?= $member['age'] ?></td>
 				        		<td><?= $member['gender'] ?></td>
 				        		<td><?= $member['date_of_baptism'] ?></td>
