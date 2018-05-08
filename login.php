@@ -18,14 +18,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Crafting Table | Login</title>
+	<title>Crafting Table | Login with changes</title>
 	<?php require_once('layout/layout.php'); ?>
 </head>
 <style>
 	
 	input
 	{
-		font-size: 40px!important;
+		font-size: 100%!important;
 		padding: 10px!important;
 	}
 
