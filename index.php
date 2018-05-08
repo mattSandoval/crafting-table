@@ -39,7 +39,7 @@ $result2 = $members->getRecord('members');?>
 				<table id="example" class="table table-bordered	table-hover table-striped" class="display" style="width:100%">
 			        <thead>
 			            <tr>
-			                <th>L/F/M Name</th>
+			                <th>Name</th>
 			                <th>Age</th>
 			                <th>Gender</th>
 			                <th>Baptism</th>
@@ -61,7 +61,7 @@ $result2 = $members->getRecord('members');?>
 			        </tbody>
 			        <tfoot>
 			            <tr>
-			                <th>L/F/M Name</th>
+			                <th>Name</th>
 			                <th>Age</th>
 			                <th>Gender</th>
 			                <th>Baptism</th>
