@@ -25,7 +25,7 @@
 	
 	input
 	{
-		font-size: 40px!important;
+		font-size: 100%!important;
 		padding: 10px!important;
 	}
 
