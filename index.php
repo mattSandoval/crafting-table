@@ -9,9 +9,6 @@ if (!isset($_SESSION['USER'])) {
 	$_SESSION['LOGIN_ERROR'] = "You must login first.";
 	header("location: login.php");
 }
-// if (!isset($_COOKIE['user'])) {
-// 	header('location: login.php');
-// }
 
 $members = new membersDAO($db);
 $result1 = $members->getRecord('members');
