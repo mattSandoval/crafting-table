@@ -33,6 +33,7 @@
 	{
 		background: rgba(100, 54, 54, 0.5);
 		color: white;
+		min-height: 100%;
 		
 	}
 	caption

@@ -1,4 +1,14 @@
-<?php session_start(); ?>
+<?php session_start();
+	$count = 0;
+	if (isset($_GET['count']))
+	{
+		$count = $_GET['count'];
+		$_SESSION['add_member_count'] = $count;
+	}else{
+		unset($_SESSION['add_member_count']);
+	}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +25,8 @@
 		<div class="row">
 			
 			<?php if (!isset($_SESSION['add_member_count'])): ?>
-					
-				<div class="col-md-4">
+						
+				<div class="col-md-12">
 					
 					<div class="panel panel-info">
 							
@@ -25,21 +35,23 @@
 							<b>Provide number of members to add :</b>
 
 						</div>
-
+						
 						<div class="panel-body">
 							
-							<div class="form-group">
+							
+
+							<form data-toggle="validator" role="form" method="get" action="<?php $_SERVER['PHP_SELF'] ?>">
+
+								<div class="form-group">
 		              
 				        
-				                <input type="number" name="age" class="form-control" id="age" placeholder="type here" data-error="Please fill this up." required>
-				            
-				               <div class="new-style help-block with-errors"></div>
-				            
-				            </div>
+					                <input type="number" name="count" class="form-control" id="age" placeholder="type here" data-error="Please fill this up." required>
+					            
+					               <div class="new-style help-block with-errors"></div>
+					            
+					            </div>
 
-							<form data-toggle="validator" role="form" method="post" action="<?php $_SERVER['PHP_SELF'] ?>">
-
-								<button type="submit" class="btn btn-block" name="count_submit">
+								<button type="submit" class="btn btn-primary">
 									
 									ENTER
 								
@@ -55,268 +67,213 @@
 
 			<?php endif ?>
 
-			<?php if (isset($_SESSION['add_member_count'])): ?>
-				
-			<?php endif ?>
-
 		</div>
 
-
-		<div class="row" style="padding: 20px;">
-			
-			<?php if (isset($_SESSION['message']['success'])): ?>
+		<?php if (isset($_SESSION['add_member_count'])): ?>
 				
-				<div class="col-md-8 alert alert-success">				
-					<p>
-					Operation Successful.</p>
-					<a href="new-member.php">
-						<span class="glyphicon glyphicon-cross"></span>
-					</a>
-				</div>	
+				<div class="col-md-8">
+					
+					<div class="panel panel-primary">
+						
+						<div class="panel-heading">
+							<?php echo $_SESSION['add_member_count'] ?> adding cards generated.
+						</div>
+
+						<div class="panel-body">
+							
+							<?php for($i = 1; $i <= $count; $i++): ?>
+
+								<div class="col-md-12 card_div<?php echo $i ?>">
+									
+									<form data-toggle="validator" role="form" method="post" action="<?php $_SERVER['PHP_SELF'] ?>">
+
+										<div class="panel panel-info">
+											
+											<div class="panel-heading">
+											
+												CARD <?php echo $i ?>
+
+												<button class="btn btn-xs btn-primary pull-right" type="button" data-toggle="modal" data-target="#card_modal<?php echo $i ?>" id="edit_card<?php echo $i ?>" onclick="clickEdit(<?php echo $i ?>)">edit</button>
+											
+											</div>
+
+											<div class="panel-body">
+												
+												<div class="col-md-3">
+													
+													<img id="add_img<?php echo $i ?>" src="../assets/images/user.png" class="img-responsive" style="max-height: 100px " />
+
+												</div>
+
+												<div class="col-md-9">
+													
+													<div class="alert alert-success">
+														
+														<b style="color: green">Status : 
+
+															<i id="status<?php echo $i ?>"> 
+
+																<small> not yet editted </small>
+
+															</i> 
+														</b>	
+
+													</div>
+
+												</div>
+
+											</div>
 
 
-			<?php unset($_SESSION['message']['success']);
-			endif ?>	
+										</div>
 
-			<div class="col-md-8 panel panel-default" style="background: rgba(255, 255, 255, 1); color: black ">
+									</form>
 
-				<div class="col-md-12">
+								</div>
 
-					<h3>PERSONAL INFORMATION</h3>
-				
+							<?php endfor ?>
+
+						</div>
+
+					</div>
+
 				</div>
 
-				<form data-toggle="validator" role="form" method="post" action="<?php $_SERVER['DOCUMENT_ROOT'] ?>/crafting-table/processes/add-new-member.php">
+				<div class="col-md-4">
+					
+					<div class="panel panel-default">
+						
+						<div class="panel-heading">
+							
+							recently added
 
-		          <div>
-		    
-		            <div class="form-group col-md-4">
-		              
-		              <label for="fName" class="control-label">First Name :</label>
-		              <input type="text" name="firstName" class="form-control" id="fName" placeholder="First Name" data-error="Please fill this up." required>
-		            
-		              <div class="new-style help-block with-errors"></div>
-		            
-		            </div>
+						</div>
 
-		            <div class="form-group col-md-4">
-		              
-		              <label for="mName" class="control-label">Middle Name :</label>
-		              <input type="text" name="middleName" class="form-control" id="mName" placeholder="Middle Name" data-error="Please fill this up." required>
-		            
-		              <div class="new-style help-block with-errors"></div>
-		            
-		            </div>
+						<div class="panel-body">
+							
+							<div class="alert alert-info">
+								
+								Raymart Sandoval Bonilla 	
 
-		            <div class="form-group col-md-4">
-		              
-		              <label for="lName" class="control-label">Last Name :</label>
-		              <input type="text" name="lastName" class="form-control" id="lName" placeholder="Last Name" data-error="Please fill this up." required>
-		            
-		              <div class="new-style help-block with-errors"></div>
-		            
-		            </div>
+								<button class="btn btn-success btn-xs pull-right" type="button">view</button>
 
-		            <div class="form-group col-md-4">
-		              
-		              <label for="birthDate" class="control-label">Date of Birth :</label>
-		              <input type="date" name="date_of_birth" class="form-control" id="birthDate" placeholder="First Name" data-error="Please fill this up." required>
-		            
-		              <div class="new-style help-block with-errors"></div>
-		            
-		            </div>
+							</div>
 
-		            <div class="form-group col-md-8">
-		              <label for="birthPlace" class="control-label">Place of Birth :</label>
-		              <textarea type="text" class="form-control" id="birthPlace" placeholder="Place of Birth"  name="placeOfBirth" data-error="Please fill this up." required></textarea>
+						</div>
 
-		              <div class="new-style help-block with-errors"></div>  
-		            </div>
+					</div>
 
-		            <div class="form-group col-md-4">
-		              
-		              <label for="gender" class="control-label">Gender :</label>
-		              <input type="text" name="gender" class="form-control" id="gender" placeholder="Male or Female" data-error="Please fill this up." required>
-		            
-		              <div class="new-style help-block with-errors"></div>
-		            
-		            </div>
+				</div>
 
-		            <div class="form-group col-md-8">
-		              
-		              <label for="languages" class="control-label">Languages :</label>
-		              <input type="text" name="language" class="form-control" id="languages" placeholder="Languages" data-error="Please fill this up." required>
-		            
-		              <div class="new-style help-block with-errors"></div>
-		            
-		            </div>
+				<!-- modals -->
 
-		            <div class="form-group col-md-4">
-		              
-		              <label for="civilStatus" class="control-label">Civil Status :</label>
-		              <input type="text" name="civilStatus" class="form-control" id="civilStatus" placeholder="Civil Status" data-error="Please fill this up." required>
-		            
-		              <div class="new-style help-block with-errors"></div>
-		            
-		            </div>
+				<?php for($x = 1; $x <= $count; $x++): ?>
 
-		            <div class="form-group col-md-4">
-		              
-		              <label for="age" class="control-label">Age :</label>
-		              <input type="number" name="age" class="form-control" id="age" placeholder="Age" data-error="Please fill this up." required>
-		            
-		              <div class="new-style help-block with-errors"></div>
-		            
-		            </div>
+					<div class="modal fade" id="card_modal<?php echo $x ?>" role="dialog" aria-labelledby="cardLabel<?php echo $x ?>">
+    
+					    <div class="modal-dialog" role="document">
+					      
+					      <div class="modal-content">
+					        
+					        <div class="modal-header">
+					        
+					          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					            <span aria-hidden="true" >&times;</span>
+					          </button>
 
-		            <div class="form-group col-md-4">
-		              
-		              <label for="job" class="control-label">Job :</label>
-		              <input type="text" name="job" class="form-control" id="job" placeholder="Job" data-error="Please fill this up." required>
-		            
-		              <div class="new-style help-block with-errors"></div>
-		            
-		            </div>
+					          <h4 class="modal-title" id="cardLabel<?php echo $i ?>"> CARD <?php echo $x ?> </h4>
 
-		            <div class="form-group col-md-4">
-		              
-		              <label for="skills" class="control-label">Skills :</label>
-		              <input type="text" name="skills" class="form-control" id="skills" placeholder="Skills" data-error="Please fill this up." required>
-		            
-		              <div class="new-style help-block with-errors"></div>
-		            
-		            </div>
 
-		            <div class="form-group col-md-8">
-		              <label for="address" class="control-label">Address :</label>
-		              <textarea type="text" class="form-control" id="address" placeholder="Adress"  name="homeAddress" data-error="Please fill this up." required></textarea>
+					        </div>
 
-		              <div class="new-style help-block with-errors"></div>  
-		            </div>
+							<form data-toggle="validator" role="form" method="post" action="<?php $_SERVER['DOCUMENT_ROOT'] ?>/crafting-table/processes/add-new-member.php" enctype="multipart/form-data" id="card_form<?php echo $x ?>">
 
-		            <div class="form-group col-md-8">
-		              <label for="education" class="control-label">Educational Attainment :</label>
-		              <textarea type="text" class="form-control" id="education" placeholder="Educational Attainment"  name="education" data-error="Please fill this up." required></textarea>
+						        <div class="modal-body">
+						        
+					        		<?php include('../layout/add-form.php') ?>
 
-		              <div class="new-style help-block with-errors"></div>  
-		            </div>
 
-		            <div class="form-group col-md-4">
-		              
-		              <label for="contact" class="control-label">Contact Number :</label>
-		              <input type="text" name="contactNumber" class="form-control" id="contact" placeholder="Contact number" data-error="Please fill this up." required>
-		            
-		              <div class="new-style help-block with-errors"></div>
-		            
-		            </div>
+						        </div>
 
-		          </div>
-		  
-		          <div class="col-md-12">
+						        <div class="modal-footer">
+						        	
+						        	<button id="save_card<?php echo $x ?>" type="submit" class="btn btn-primary">Save</button>
+						        	<button id="close_modal<?php echo $x ?>" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 
-		            <h3>CHURCH INFORMATION</h3>
-		          
-		          </div>
+						        </div>
 
-		          <div>
-		            
-		            <div class="form-group">
-		            
-		              <div class="form-group col-md-4">
-		              
-		                <label for="baptismDate" class="control-label">Date of Baptism :</label>
-		                <input type="date" name="date_of_baptism" class="form-control" id="baptismDate" placeholder="Date of Baptism" data-error="Please fill this up." required>
-		              
-		                <div class="new-style help-block with-errors"></div>
-		              
-		              </div>
+				        	</form>
 
-		              <div class="form-group col-md-8">
-		                <label for="baptismPlace" class="control-label">Place of Baptism :</label>
-		                <textarea type="text" class="form-control" id="baptismPlace" placeholder="Place of Baptism"  name="placeOfBaptism" data-error="Please fill this up." required></textarea>
+					      </div>
 
-		                <div class="new-style help-block with-errors"></div>  
-		              </div>
+					    </div>
 
-		              <div class="form-group col-md-4">
-		              
-		                <label for="baptizer" class="control-label">Baptizer :</label>
-		                <input type="text" name="baptizer" class="form-control" id="baptizer" placeholder="Baptizer" data-error="Please fill this up." required>
-		              
-		                <div class="new-style help-block with-errors"></div>
-		              
-		              </div>
+					</div>
 
-		              <div class="form-group col-md-4">
-		              
-		                <label for="locale" class="control-label">Current Locale :</label>
-		                <input type="text" name="localeOf" class="form-control" id="locale" placeholder="Current Locale" data-error="Please fill this up." required>
-		              
-		                <div class="new-style help-block with-errors"></div>
-		              
-		              </div>
+				<?php endfor ?>
 
-		              <div class="form-group col-md-4">
-		              
-		                <label for="currentGroup" class="control-label">Current Group :</label>
-		                <input type="text" name="churchGroup" class="form-control" id="currentGroup" placeholder="Group" data-error="Please fill this up." required>
-		              
-		                <div class="new-style help-block with-errors"></div>
-		              
-		              </div>
-
-		              <div class="form-group col-md-4">
-		              
-		                <label for="chatSauce" class="control-label">Chatsauce account :</label>
-		                <input type="text" name="chatsauce" class="form-control" id="chatSauce" placeholder="chatSauce" data-error="Please fill this up." required>
-		              
-		                <div class="new-style help-block with-errors"></div>
-		              
-		              </div>
-
-		              <div class="form-group col-md-4">
-		              
-		                <label for="email" class="control-label">EMAIL :</label>
-		                <input type="text" name="email_optional" class="form-control" id="email" placeholder="email" data-error="Please fill this up." required>
-		              
-		                <div id="txtHint" class="new-style help-block with-errors"></div>
-		              
-		              </div>
-
-		              <div class="form-group col-md-4">
-		              
-		                <label for="churchId" class="control-label">Church ID :</label>
-		                  <input type="text" name="churchId" class="form-control" id="churchId" placeholder="ID" data-error="Please fill this up." required>
-		              
-		                <div  class="new-style help-block with-errors"></div>
-		              
-		              </div>
-
-		            </div>
-
-		          </div>
-
-		          <div class="form-group col-md-4 col-md-offset-4">
-		              
-		            <br /> 
-
-		            <button type="submit" class="btn btn-block" style="background: #222; color: white" value="Not given">SUBMIT NEW MEMBER INFO</button>
-		          
-		            <br />
-		            <br />
-		            <br />
-		          </div>
-
-		        </form>
-
-			</div>
-
-		</div>
+		<?php endif ?>
 
 	</div>
 
 </body>
 
 <?php require_once($_SERVER['DOCUMENT_ROOT'].'/crafting-table/layout/scripts.php'); ?>
+
+<script>
+	
+	Element.prototype.remove = function() {
+		    this.parentElement.removeChild(this);
+		}
+		NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+		    for(var i = this.length - 1; i >= 0; i--) {
+		        if(this[i] && this[i].parentElement) {
+		            this[i].parentElement.removeChild(this[i]);
+		        }
+		    }
+		}
+
+	function clickEdit( card ) 
+	{
+		var btn = 'edit_card' + card;
+		var stat = 'status' + card;
+		var formName = 'card_form' + card;
+		var inputs = document.getElementById(formName).elements;
+		var i = 0;
+		var completed = 0;
+
+		for (i = 0; i < inputs.length - 2; i++)
+		{
+			if(inputs[i].value !== "") {
+			
+				completed += 1;
+
+			}
+
+		}
+
+		document.getElementById(stat).innerHTML = "<small> Completed " + completed + " / 22   . Please finish and <b> SAVE </b>. </small>";
+	
+		$('#card_modal1').on('hidden.bs.modal', function () {
+			clickEdit( card );    
+		});
+
+		if(completed == inputs.length - 2)
+		{
+			document.getElementsByClassName("card_div" + card).remove();
+			// document.getElementById(stat).innerHTML = "Completed ! <button class='btn btn-success btn-xs' type='button'>Save</button>";		
+		}
+	}
+
+</script>
+<script>
+	// Warning before leaving the page (back button, or outgoinglink)
+	window.onbeforeunload = function() {
+	   return "Do you really want to leave ?";
+	   //if we return nothing here (just calling return;) then there will be no pop-up question at all
+	   //return;
+	};
+</script>
+
 
 </html>
