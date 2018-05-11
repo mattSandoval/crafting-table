@@ -14,19 +14,21 @@
 <head>
 	<title>Crafting Table | Add Member</title>
 	<?php require_once($_SERVER['DOCUMENT_ROOT'].'/crafting-table/layout/layout.php'); ?>
-	
+
 </head>
 <body>
 	
 	<div class="container">
 		
+		<input id="if_editting" value="false" hidden></input>
+
 		<?php require_once($_SERVER['DOCUMENT_ROOT'].'/crafting-table/layout/navigation.php'); ?>
 		
 		<div class="row">
 			
 			<?php if (!isset($_SESSION['add_member_count'])): ?>
 						
-				<div class="col-md-12">
+				<div class="col-md-8">
 					
 					<div class="panel panel-info">
 							
@@ -67,13 +69,37 @@
 
 			<?php endif ?>
 
-		</div>
+			<div class="col-md-4">
+					
+				<div class="panel panel-default">
+					
+					<div class="panel-heading">
+						
+						recently added
 
-		<?php if (isset($_SESSION['add_member_count'])): ?>
+					</div>
+
+					<div class="panel-body">
+						
+						<div class="alert alert-info">
+							
+							Raymart Sandoval Bonilla 	
+
+							<button class="btn btn-success btn-xs pull-right" type="button">view</button>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<?php if (isset($_SESSION['add_member_count'])): ?>
 				
 				<div class="col-md-8">
 					
-					<div class="panel panel-primary">
+					<div class="panel panel-default" style="box-shadow: 0 10px 10px #222;">
 						
 						<div class="panel-heading">
 							<?php echo $_SESSION['add_member_count'] ?> adding cards generated.
@@ -93,7 +119,7 @@
 											
 												CARD <?php echo $i ?>
 
-												<button class="btn btn-xs btn-primary pull-right" type="button" data-toggle="modal" data-target="#card_modal<?php echo $i ?>" id="edit_card<?php echo $i ?>" onclick="clickEdit(<?php echo $i ?>)">edit</button>
+												<button class="btn btn-xs btn-primary pull-right" type="button" data-toggle="modal" data-target="#card_modal<?php echo $i ?>" onclick="clickEdit(<?php echo $i ?>)" id="edit_card<?php echo $i ?>" >edit</button>
 											
 											</div>
 
@@ -101,15 +127,17 @@
 												
 												<div class="col-md-3">
 													
-													<img id="add_img<?php echo $i ?>" src="../assets/images/user.png" class="img-responsive" style="max-height: 100px " />
+													<b  id="add_img<?php echo $i ?>">
+														<img src="../assets/images/user.png" class="img-responsive" style="max-height: 100px " />
+													</b>
 
 												</div>
 
 												<div class="col-md-9">
 													
-													<div class="alert alert-success">
+													<div class="alert alert-success" style="padding: 40px;">
 														
-														<b style="color: green">Status : 
+														<b style="color: maroon">Status : 
 
 															<i id="status<?php echo $i ?>"> 
 
@@ -132,32 +160,6 @@
 								</div>
 
 							<?php endfor ?>
-
-						</div>
-
-					</div>
-
-				</div>
-
-				<div class="col-md-4">
-					
-					<div class="panel panel-default">
-						
-						<div class="panel-heading">
-							
-							recently added
-
-						</div>
-
-						<div class="panel-body">
-							
-							<div class="alert alert-info">
-								
-								Raymart Sandoval Bonilla 	
-
-								<button class="btn btn-success btn-xs pull-right" type="button">view</button>
-
-							</div>
 
 						</div>
 
@@ -190,14 +192,13 @@
 
 						        <div class="modal-body">
 						        
-					        		<?php include('../layout/add-form.php') ?>
+					        		<?php include('../layout/add-form.php'); ?>
 
 
 						        </div>
 
 						        <div class="modal-footer">
 						        	
-						        	<button id="save_card<?php echo $x ?>" type="submit" class="btn btn-primary">Save</button>
 						        	<button id="close_modal<?php echo $x ?>" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 
 						        </div>
@@ -214,66 +215,18 @@
 
 		<?php endif ?>
 
-	</div>
+		</div>
+
+	<?php require_once($_SERVER['DOCUMENT_ROOT'].'/crafting-table/layout/scripts.php'); ?>
+	<script src="../assets/custom/insert-member-script.js"></script>
+	<script>		
+		$(window).bind("beforeunload", function(){
+		
+	        return confirm("Do you really want to refresh?"); 
+			
+		});
+	</script>
 
 </body>
-
-<?php require_once($_SERVER['DOCUMENT_ROOT'].'/crafting-table/layout/scripts.php'); ?>
-
-<script>
-	
-	Element.prototype.remove = function() {
-		    this.parentElement.removeChild(this);
-		}
-		NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-		    for(var i = this.length - 1; i >= 0; i--) {
-		        if(this[i] && this[i].parentElement) {
-		            this[i].parentElement.removeChild(this[i]);
-		        }
-		    }
-		}
-
-	function clickEdit( card ) 
-	{
-		var btn = 'edit_card' + card;
-		var stat = 'status' + card;
-		var formName = 'card_form' + card;
-		var inputs = document.getElementById(formName).elements;
-		var i = 0;
-		var completed = 0;
-
-		for (i = 0; i < inputs.length - 2; i++)
-		{
-			if(inputs[i].value !== "") {
-			
-				completed += 1;
-
-			}
-
-		}
-
-		document.getElementById(stat).innerHTML = "<small> Completed " + completed + " / 22   . Please finish and <b> SAVE </b>. </small>";
-	
-		$('#card_modal1').on('hidden.bs.modal', function () {
-			clickEdit( card );    
-		});
-
-		if(completed == inputs.length - 2)
-		{
-			document.getElementsByClassName("card_div" + card).remove();
-			// document.getElementById(stat).innerHTML = "Completed ! <button class='btn btn-success btn-xs' type='button'>Save</button>";		
-		}
-	}
-
-</script>
-<script>
-	// Warning before leaving the page (back button, or outgoinglink)
-	window.onbeforeunload = function() {
-	   return "Do you really want to leave ?";
-	   //if we return nothing here (just calling return;) then there will be no pop-up question at all
-	   //return;
-	};
-</script>
-
 
 </html>

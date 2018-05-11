@@ -31,7 +31,7 @@
 
 	.container 
 	{
-		background: rgba(100, 54, 54, 0.5);
+		background: rgba(100, 50, 50, 0.3);
 		color: white;
 		min-height: 100%;
 		
@@ -44,6 +44,11 @@
 	{
 		color: black;
 	}
+	.panel, button, input, textarea {
+		box-shadow: 0 2px 2px gray !important;
+	}
+
 </style>
+
 <link rel="stylesheet" type="text/css" href="<?php $_SERVER['DOCUMENT_ROOT'] ?>/crafting-table/assets/bootstrap/css/bootstrap.min.css">
 
