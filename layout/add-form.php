@@ -1,8 +1,8 @@
 <script>
   
-  function uploadImage( card ) {
+  function uploadImage() {
     
-    $('#image_file' + card).on('change', function() {
+    $('#image_file').on('change', function() {
 
         var file_data = $(this).prop('files')[0];   
         var form_data = new FormData();                  
@@ -10,7 +10,7 @@
 
         $.ajax({
 
-            url: '../processes/image-upload.php', // point to server-side PHP script 
+            url: 'processes/image-upload.php', // point to server-side PHP script 
             dataType: 'text',  // what to expect back from the PHP script, if anything
             cache: false,
             contentType: false,
@@ -19,7 +19,7 @@
             type: 'post',
             success: function(php_script_response){
 
-              document.getElementById('add_img' + card).innerHTML = '<img src="../assets/images/' + file_data.name + '" class="img-responsive" style="min-height: 100px ;max-height: 100px;min-width:100px; max-width: 100px; border-radius: 100% " />';
+              document.getElementById('add_img').innerHTML = '<img src="assets/images/' + file_data.name + '" class="img-responsive" style="min-height: 100px ;max-height: 100px;min-width:100px; max-width: 100px; border-radius: 100% " />';
             
             }
 
@@ -60,7 +60,7 @@
             
             <div class="form-group col-md-6">
               
-              <input class="form-control" type="file" id="image_file<?php echo $x ?>" onclick="uploadImage(<?php echo $x ?>);" data-error="Please upload an image." required />
+              <input class="form-control" type="file" id="image_file" onclick="uploadImage();" data-error="Please upload an image." required />
               <label for="image_file" class="control-label">Upload an image </label>
             
               <div class="new-style help-block with-errors"></div>

@@ -20,8 +20,6 @@
    
       <ul class="nav navbar-nav">
    
-        <li><a href="<?php $_SERVER['DOCUMENT_ROOT'] ?>/crafting-table/pages/new-member.php"> <span class="glyphicon glyphicon-plus"></span> Add new member <span class="sr-only">(current)</span></a></li>
-   
         <li class="dropdown">
    
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Attendance <span class="caret"></span></a>
