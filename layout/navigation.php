@@ -28,8 +28,8 @@
            
             <li><a href="#" data-toggle="modal" data-target="#pre_Attendance">Start attendance</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="<?php $_SERVER['DOCUMENT_ROOT'] ?>/crafting-table/pages/attendance.php">Load last attendance</a></li>
-            <li><a href="<?php $_SERVER['DOCUMENT_ROOT'] ?>/crafting-table/pages/attendance-select.php">Select previous attendance</a></li>
+            <li><a href="<?php $_SERVER['DOCUMENT_ROOT'] ?>/crafting-table/pages/attendance.php">Resume latest attendance</a></li>
+            <li><a href="<?php $_SERVER['DOCUMENT_ROOT'] ?>/crafting-table/pages/attendance-select.php">Review attendance</a></li>
           
           </ul>
         
